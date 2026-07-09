@@ -3,224 +3,723 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>火车站多站台候车大屏</title>
+<title>漯河西站站台大屏</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
-body{width:100vw;height:100vh;overflow:hidden;display:flex;flex-direction:column;background:#000;}
-/* 顶部站名栏 */
-.station-header{width:100%;height:18vh;background:#0f243a;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;flex-shrink:0;margin-bottom:12px;}
-.station-cn{font-size:9vh;font-weight:bold;letter-spacing:0.6vw;}
-.station-en{font-size:3vh;margin-top:1vh;opacity:0.9;}
-/* 主体左右分栏容器 */
-.main-container{flex:1;display:flex;gap:16px;padding:0 12px;overflow:hidden;}
-.col-left,.col-right{flex:1;display:flex;flex-direction:column;gap:16px;}
-/* 单组三联站台模块 */
-.platform-group{display:flex;gap:12px;align-items:center;height:24vh;}
-/* 偶数站台：左 */
-.platform-even{flex:1;height:100%;background:#111;color:#ffdd00;display:grid;grid-template-columns:60px 1fr;}
-/* 奇数站台：右 */
-.platform-odd{flex:1;height:100%;background:#111;color:#ffdd00;display:grid;grid-template-columns:1fr 60px;}
-/* 站台侧边大号数字 */
-.platform-num{display:flex;justify-content:center;align-items:center;font-size:8vh;font-weight:bold;color:#fff;background:#0a1828;}
-/* 站台文字内容区 */
-.platform-content{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8px;gap:12px;height:100%;}
-.train-top{font-size:4vh;display:flex;width:100%;justify-content:space-between;padding:0 10px;}
-.train-line{font-size:3.8vh;}
-/* 空站台黄色标语 */
-.empty-text{color:#ffdd00;text-align:center;display:flex;flex-direction:column;gap:20px;height:100%;justify-content:center;font-size:3.6vh;font-weight:bold;}
-/* 中间时钟 */
-.clock-wrap{width:14vh;height:14vh;border-radius:50%;background:#fff;display:flex;justify-content:center;align-items:center;position:relative;flex-shrink:0;}
-.clock-face{width:92%;height:92%;border-radius:50%;position:relative;background:#fff;}
-.clock-num{position:absolute;font-size:2vh;color:#000;font-weight:bold;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Microsoft YaHei",sans-serif;
+}
+body{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  background:#000;
+}
+
+.station-header{
+  width:100%;
+  height:18vh;
+  background:#0f243a;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  flex-shrink:0;
+  margin-bottom:12px;
+}
+.station-cn{
+  font-size:9vh;
+  font-weight:bold;
+  letter-spacing:0.6vw;
+}
+.station-en{
+  font-size:3vh;
+  margin-top:1vh;
+  opacity:0.9;
+}
+
+.main-container{
+  flex:1;
+  display:flex;
+  gap:16px;
+  padding:0 12px;
+  overflow:hidden;
+}
+.col-left,.col-right{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.platform-group{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  height:24vh;
+}
+
+.platform-even{
+  flex:1;
+  height:100%;
+  background:#111;
+  color:#ffdd00;
+  display:grid;
+  grid-template-columns:60px 1fr;
+}
+
+.platform-odd{
+  flex:1;
+  height:100%;
+  background:#111;
+  color:#ffdd00;
+  display:grid;
+  grid-template-columns:1fr 60px;
+}
+
+.platform-num{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:8vh;
+  font-weight:bold;
+  color:#fff;
+  background:#0a1828;
+}
+
+.platform-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:8px;
+  gap:12px;
+  height:100%;
+}
+.train-top{
+  font-size:4vh;
+  display:flex;
+  width:100%;
+  justify-content:space-between;
+  padding:0 10px;
+}
+.train-line{
+  font-size:3.8vh;
+}
+
+.empty-text{
+  color:#ffdd00;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  height:100%;
+  justify-content:center;
+  font-size:3.6vh;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.clock-wrap{
+  width:14vh;
+  height:14vh;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  flex-shrink:0;
+}
+.clock-face{
+  width:92%;
+  height:92%;
+  border-radius:50%;
+  position:relative;
+  background:#fff;
+}
+.clock-num{
+  position:absolute;
+  font-size:2vh;
+  color:#000;
+  font-weight:bold;
+}
 .clock-num12{top:4px;left:50%;transform:translateX(-50%);}
 .clock-num3{right:4px;top:50%;transform:translateY(-50%);}
 .clock-num6{bottom:4px;left:50%;transform:translateX(-50%);}
 .clock-num9{left:4px;top:50%;transform:translateY(-50%);}
-.h-hand,.m-hand{position:absolute;left:50%;bottom:50%;transform-origin:bottom center;background:#000;border-radius:4px;}
-.h-hand{width:8px;height:35%;margin-left:-4px;z-index:3;}
-.m-hand{width:6px;height:45%;margin-left:-3px;z-index:4;}
-/* 编辑面板 */
-.edit-btn{position:fixed;top:10px;right:10px;z-index:99;padding:6px 12px;background:#2382d2;color:#fff;border:none;border-radius:4px;font-size:14px;cursor:pointer;}
-.edit-panel{position:fixed;top:50px;right:10px;width:400px;background:#0a1828;border:1px solid #4488dd;padding:16px;color:#fff;display:none;z-index:99;max-height:85vh;overflow-y:auto;}
-.edit-title{font-size:18px;font-weight:bold;margin-bottom:12px;color:#fff;}
-.block-line{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #446;}
-.input-item{width:100%;padding:8px;font-size:16px;margin-bottom:8px;color:#000;}
-.btn-row{display:flex;gap:8px;margin-top:12px;}
-.btn{flex:1;padding:8px;border:none;border-radius:4px;font-size:15px;cursor:pointer;}
-.btn-save{background:#217ad9;color:#fff;}
+
+.h-hand,.m-hand{
+  position:absolute;
+  left:50%;
+  bottom:50%;
+  transform-origin:bottom center;
+  background:#000;
+  border-radius:4px;
+}
+.h-hand{
+  width:8px;
+  height:35%;
+  margin-left:-4px;
+  z-index:3;
+}
+.m-hand{
+  width:6px;
+  height:45%;
+  margin-left:-3px;
+  z-index:4;
+}
+
+.edit-btn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:99;
+  padding:6px 12px;
+  background:#2382d2;
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.edit-panel{
+  position:fixed;
+  top:50px;
+  right:10px;
+  width:400px;
+  background:#0a1828;
+  border:1px solid #4488dd;
+  padding:16px;
+  color:#fff;
+  display:none;
+  z-index:99;
+  max-height:85vh;
+  overflow-y:auto;
+}
+.edit-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+.block-line{
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid #446;
+}
+.input-item{
+  width:100%;
+  padding:8px;
+  font-size:16px;
+  margin-bottom:8px;
+  color:#000;
+}
+.btn-row{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+.btn{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:4px;
+  font-size:15px;
+  cursor:pointer;
+}
 .btn-add{background:#23a24d;color:#fff;}
-.rule-desc{font-size:13px;color:#ccc;margin-top:12px;line-height:1.5;}
-.item{margin-bottom:10px;}
-.item label{display:block;margin-bottom:4px;font-size:14px;}
+.btn-save{background:#217ad9;color:#fff;}
+.rule-desc{
+  font-size:13px;
+  color:#ccc;
+  margin-top:12px;
+  line-height:1.5;
+}
+.item{
+  margin-bottom:10px;
+}
+.item label{
+  display:block;
+  margin-bottom:4px;
+  font-size:14px;
+}
+.debug-box{
+  margin-top:12px;
+  padding:10px;
+  background:#111;
+  border:1px solid #555;
+  font-size:12px;
+  color:#ffdd00;
+  white-space:pre-wrap;
+  max-height:150px;
+  overflow-y:auto;
+}
 </style>
 </head>
 <body>
-<!-- 顶部站名（英文已修正为Luohexi） -->
+
 <div class="station-header">
-<div class="station-cn" id="cnStation">漯河西站</div>
-<div class="station-en" id="enStation">Luohexi Railway Station</div>
+  <div class="station-cn" id="cnStation">漯河西站</div>
+  <div class="station-en" id="enStation">Luohexi Railway Station</div>
 </div>
-<!-- 编辑按钮 -->
+
 <button class="edit-btn" id="toggleEdit">打开后台编辑</button>
-<!-- 主体站台区域（已删除底部栏相关HTML） -->
+
 <div class="main-container">
-<div class="col-left" id="colLeft">
-<!-- 组1：2+1 -->
-<div class="platform-group" data-pair="1">
-<div class="platform-even" data-station="2">
-<div class="platform-num">2</div>
-<div class="platform-content"></div>
+  <div class="col-left" id="colLeft">
+
+    <div class="platform-group" data-pair="1">
+      <div class="platform-even" data-station="2">
+        <div class="platform-num">2</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="1">
+        <div class="platform-content"></div>
+        <div class="platform-num">1</div>
+      </div>
+    </div>
+
+    <div class="platform-group" data-pair="2">
+      <div class="platform-even" data-station="4">
+        <div class="platform-num">4</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="3">
+        <div class="platform-content"></div>
+        <div class="platform-num">3</div>
+      </div>
+    </div>
+
+    <div class="platform-group" data-pair="3">
+      <div class="platform-even" data-station="6">
+        <div class="platform-num">6</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="5">
+        <div class="platform-content"></div>
+        <div class="platform-num">5</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-right" id="colRight">
+
+    <div class="platform-group" data-pair="4">
+      <div class="platform-even" data-station="8">
+        <div class="platform-num">8</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="7">
+        <div class="platform-content"></div>
+        <div class="platform-num">7</div>
+      </div>
+    </div>
+
+    <div class="platform-group" data-pair="5">
+      <div class="platform-even" data-station="10">
+        <div class="platform-num">10</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="9">
+        <div class="platform-content"></div>
+        <div class="platform-num">9</div>
+      </div>
+    </div>
+
+    <div class="platform-group" data-pair="6">
+      <div class="platform-even" data-station="12">
+        <div class="platform-num">12</div>
+        <div class="platform-content"></div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-face">
+          <div class="clock-num clock-num12">12</div>
+          <div class="clock-num clock-num3">3</div>
+          <div class="clock-num clock-num6">6</div>
+          <div class="clock-num clock-num9">9</div>
+          <div class="h-hand"></div>
+          <div class="m-hand"></div>
+        </div>
+      </div>
+      <div class="platform-odd" data-station="11">
+        <div class="platform-content"></div>
+        <div class="platform-num">11</div>
+      </div>
+    </div>
+
+  </div>
 </div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand" id="hHand"></div><div class="m-hand" id="mHand"></div></div></div>
-<div class="platform-odd" data-station="1">
-<div class="platform-content"></div>
-<div class="platform-num">1</div>
-</div>
-</div>
-<!-- 组2：4+3 -->
-<div class="platform-group" data-pair="2">
-<div class="platform-even" data-station="4">
-<div class="platform-num">4</div>
-<div class="platform-content"></div>
-</div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand"></div><div class="m-hand"></div></div></div>
-<div class="platform-odd" data-station="3">
-<div class="platform-content"></div>
-<div class="platform-num">3</div>
-</div>
-</div>
-<!-- 组3：6+5 -->
-<div class="platform-group" data-pair="3">
-<div class="platform-even" data-station="6">
-<div class="platform-num">6</div>
-<div class="platform-content"></div>
-</div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand"></div><div class="m-hand"></div></div></div>
-<div class="platform-odd" data-station="5">
-<div class="platform-content"></div>
-<div class="platform-num">5</div>
-</div>
-</div>
-</div>
-<div class="col-right" id="colRight">
-<!-- 组4：8+7 -->
-<div class="platform-group" data-pair="4">
-<div class="platform-even" data-station="8">
-<div class="platform-num">8</div>
-<div class="platform-content"></div>
-</div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand"></div><div class="m-hand"></div></div></div>
-<div class="platform-odd" data-station="7">
-<div class="platform-content"></div>
-<div class="platform-num">7</div>
-</div>
-</div>
-<!-- 组5：10+9 -->
-<div class="platform-group" data-pair="5">
-<div class="platform-even" data-station="10">
-<div class="platform-num">10</div>
-<div class="platform-content"></div>
-</div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand"></div><div class="m-hand"></div></div></div>
-<div class="platform-odd" data-station="9">
-<div class="platform-content"></div>
-<div class="platform-num">9</div>
-</div>
-</div>
-<!-- 组6：12+11 -->
-<div class="platform-group" data-pair="6">
-<div class="platform-even" data-station="12">
-<div class="platform-num">12</div>
-<div class="platform-content"></div>
-</div>
-<div class="clock-wrap"><div class="clock-face"><div class="clock-num clock-num12">12</div><div class="clock-num clock-num3">3</div><div class="clock-num clock-num6">6</div><div class="clock-num clock-num9">9</div><div class="h-hand"></div><div class="m-hand"></div></div></div>
-<div class="platform-odd" data-station="11">
-<div class="platform-content"></div>
-<div class="platform-num">11</div>
-</div>
-</div>
-</div>
-</div>
-<!-- 后台编辑面板 -->
+
 <div class="edit-panel" id="editPanel">
-<div class="edit-title">车次/站名编辑面板</div>
-<div class="block-line">
-<div class="rule-desc">时效规则：始发车开车前8分钟上屏、过路车开车前7分钟上屏；普通车开车1分钟清除；终到车到站10分钟清除；同站台有后车则立刻切换</div>
-</div>
-<div class="item">
-<label>顶部中文站名</label>
-<input class="input-item" id="editCnStation" placeholder="如：漯河西站">
-</div>
-<div class="item">
-<label>顶部英文站名</label>
-<input class="input-item" id="editEnStation" placeholder="如：Luohexi Railway Station">
-</div>
-<div class="item">
-<label>目标站台号（1-12）</label>
-<input class="input-item" id="editPlat" placeholder="数字">
-</div>
-<div class="item">
-<label>车次</label>
-<input class="input-item" id="editTrainNo" placeholder="G/D/C字头">
-</div>
-<div class="item">
-<label>始发站</label>
-<input class="input-item" id="editFrom" placeholder="始发站名">
-</div>
-<div class="item">
-<label>终到站</label>
-<input class="input-item" id="editTo" placeholder="终到站名">
-</div>
-<div class="item">
-<label>开车时间 HH:mm</label>
-<input class="input-item" id="editDep" placeholder="14:30">
-</div>
-<div class="btn-row">
-<button class="btn btn-add" id="btnAddTrain">添加车次</button>
-<button class="btn btn-save" id="btnClearPlat">清空该站台</button>
-</div>
+  <div class="edit-title">车次/站名编辑面板</div>
+  <div class="block-line">
+    <div class="rule-desc">
+      宽松测试版：开车前240分钟上屏，开车后60分钟内仍显示，终到车到站后120分钟留存；多车次自动切换
+    </div>
+  </div>
+
+  <div class="item">
+    <label>顶部中文站名</label>
+    <input class="input-item" id="editCnStation" value="漯河西站">
+  </div>
+
+  <div class="item">
+    <label>顶部英文站名</label>
+    <input class="input-item" id="editEnStation" value="Luohexi Railway Station">
+  </div>
+
+  <div class="item">
+    <label>目标站台号 1-12</label>
+    <input class="input-item" id="editPlat" placeholder="数字">
+  </div>
+
+  <div class="item">
+    <label>车次编号</label>
+    <input class="input-item" id="editTrainNo" placeholder="G/D/C">
+  </div>
+
+  <div class="item">
+    <label>始发站</label>
+    <input class="input-item" id="editFrom" placeholder="如：漯河西">
+  </div>
+
+  <div class="item">
+    <label>终到站</label>
+    <input class="input-item" id="editTo" placeholder="如：漯河西">
+  </div>
+
+  <div class="item">
+    <label>开车时间 HH:mm</label>
+    <input class="input-item" id="editDep" placeholder="19:05">
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-add" id="btnAddTrain">添加车次</button>
+    <button class="btn btn-save" id="btnClearPlat">清空站台</button>
+  </div>
+
+  <div class="debug-box" id="debugBox">调试信息</div>
 </div>
 
 <script>
-// 全局时效常量
-const DEPART_LOCAL_MIN = 8;
-const PASS_LOCAL_MIN = 7;
-const CLEAR_AFTER_DEPART_MIN = 1;
-const ARRIVE_CLEAR_MIN = 10;
-const STOP_CHECK_MIN = 5;
+const DEPART_LOCAL_MIN = 240;
+const PASS_LOCAL_MIN = 240;
+const CLEAR_AFTER_DEPART_MIN = 60;
+const ARRIVE_CLEAR_MIN = 120;
 
 let stationCn = "漯河西站";
 let stationEn = "Luohexi Railway Station";
-let platformTrains = {};
-let clockTimer, refreshTimer;
+
+let platformTrains = {
+  "1": [
+    {no:"G1201",from:"漯河西",to:"上海虹桥",depTime:"08:05"},
+    {no:"G1203",from:"漯河西",to:"杭州东",depTime:"08:22"},
+    {no:"G1205",from:"漯河西",to:"宁波",depTime:"08:41"},
+    {no:"G1207",from:"漯河西",to:"温州南",depTime:"09:03"},
+    {no:"G1209",from:"漯河西",to:"福州",depTime:"09:26"},
+    {no:"G1211",from:"漯河西",to:"厦门北",depTime:"09:48"},
+    {no:"G1213",from:"漯河西",to:"深圳北",depTime:"10:12"},
+    {no:"G1215",from:"漯河西",to:"广州南",depTime:"10:35"},
+    {no:"G1217",from:"漯河西",to:"珠海",depTime:"10:59"},
+    {no:"G1219",from:"漯河西",to:"香港西九龙",depTime:"11:22"},
+    {no:"D2801",from:"西安北",to:"合肥南",depTime:"11:45"},
+    {no:"D2803",from:"兰州西",to:"南京南",depTime:"12:08"},
+    {no:"D2805",from:"银川",to:"上海虹桥",depTime:"12:31"},
+    {no:"D2807",from:"西宁",to:"杭州东",depTime:"12:54"},
+    {no:"D2809",from:"成都东",to:"宁波",depTime:"13:17"}
+  ],
+  "2": [
+    {no:"D2810",from:"重庆西",to:"青岛北",depTime:"08:10"},
+    {no:"D2812",from:"贵阳北",to:"济南西",depTime:"08:33"},
+    {no:"D2814",from:"昆明南",to:"天津西",depTime:"08:56"},
+    {no:"G1810",from:"武汉",to:"济南西",depTime:"09:19"},
+    {no:"G1812",from:"长沙南",to:"石家庄",depTime:"09:42"},
+    {no:"G1814",from:"广州南",to:"北京西",depTime:"10:05"},
+    {no:"G1816",from:"深圳北",to:"太原南",depTime:"10:28"},
+    {no:"G1818",from:"珠海",to:"呼和浩特东",depTime:"10:51"},
+    {no:"G1820",from:"香港西九龙",to:"哈尔滨西",depTime:"11:14"},
+    {no:"D1061",from:"郑州东",to:"杭州东",depTime:"11:37"},
+    {no:"D1063",from:"安阳东",to:"宁波",depTime:"12:00"},
+    {no:"D1065",from:"新乡东",to:"温州南",depTime:"12:23"},
+    {no:"D1067",from:"许昌东",to:"福州",depTime:"12:46"},
+    {no:"D1069",from:"驻马店西",to:"厦门北",depTime:"13:09"},
+    {no:"D1071",from:"信阳东",to:"深圳北",depTime:"13:32"}
+  ],
+  "3": [
+    {no:"G206",from:"北京西",to:"漯河西",depTime:"08:15"},
+    {no:"G208",from:"天津西",to:"漯河西",depTime:"08:38"},
+    {no:"G210",from:"太原南",to:"漯河西",depTime:"09:01"},
+    {no:"G212",from:"石家庄",to:"漯河西",depTime:"09:24"},
+    {no:"G214",from:"济南西",to:"漯河西",depTime:"09:47"},
+    {no:"G216",from:"青岛北",to:"漯河西",depTime:"10:10"},
+    {no:"G218",from:"呼和浩特东",to:"漯河西",depTime:"10:33"},
+    {no:"G220",from:"哈尔滨西",to:"漯河西",depTime:"10:56"},
+    {no:"D821",from:"天津西",to:"漯河西",depTime:"11:19"},
+    {no:"D823",from:"太原南",to:"漯河西",depTime:"11:42"},
+    {no:"D825",from:"石家庄",to:"漯河西",depTime:"12:05"},
+    {no:"D827",from:"济南西",to:"漯河西",depTime:"12:28"},
+    {no:"D829",from:"青岛北",to:"漯河西",depTime:"12:51"},
+    {no:"D831",from:"呼和浩特东",to:"漯河西",depTime:"13:14"},
+    {no:"D833",from:"哈尔滨西",to:"漯河西",depTime:"13:37"}
+  ],
+  "4": [
+    {no:"G325",from:"漯河西",to:"广州南",depTime:"08:20"},
+    {no:"G327",from:"漯河西",to:"深圳北",depTime:"08:43"},
+    {no:"G329",from:"漯河西",to:"珠海",depTime:"09:06"},
+    {no:"G331",from:"漯河西",to:"香港西九龙",depTime:"09:29"},
+    {no:"G333",from:"漯河西",to:"长沙南",depTime:"09:52"},
+    {no:"G335",from:"漯河西",to:"武汉",depTime:"10:15"},
+    {no:"G337",from:"漯河西",to:"贵阳北",depTime:"10:38"},
+    {no:"G339",from:"漯河西",to:"昆明南",depTime:"11:01"},
+    {no:"D6421",from:"重庆西",to:"青岛北",depTime:"11:24"},
+    {no:"D6423",from:"成都东",to:"济南西",depTime:"11:47"},
+    {no:"D6425",from:"西安北",to:"天津西",depTime:"12:10"},
+    {no:"D6427",from:"兰州西",to:"太原南",depTime:"12:33"},
+    {no:"D6429",from:"银川",to:"石家庄",depTime:"12:56"},
+    {no:"D6431",from:"西宁",to:"济南西",depTime:"13:19"},
+    {no:"D6433",from:"乌鲁木齐",to:"青岛北",depTime:"13:42"}
+  ],
+  "5": [
+    {no:"D106",from:"郑州东",to:"杭州东",depTime:"08:25"},
+    {no:"D108",from:"郑州东",to:"宁波",depTime:"08:48"},
+    {no:"D110",from:"郑州东",to:"温州南",depTime:"09:11"},
+    {no:"D112",from:"郑州东",to:"福州",depTime:"09:34"},
+    {no:"D114",from:"郑州东",to:"厦门北",depTime:"09:57"},
+    {no:"D116",from:"郑州东",to:"深圳北",depTime:"10:20"},
+    {no:"D118",from:"郑州东",to:"广州南",depTime:"10:43"},
+    {no:"D120",from:"郑州东",to:"珠海",depTime:"11:06"},
+    {no:"D122",from:"郑州东",to:"香港西九龙",depTime:"11:29"},
+    {no:"G1902",from:"石家庄",to:"南昌西",depTime:"11:52"},
+    {no:"G1904",from:"太原南",to:"长沙南",depTime:"12:15"},
+    {no:"G1906",from:"天津西",to:"武汉",depTime:"12:38"},
+    {no:"G1908",from:"北京西",to:"贵阳北",depTime:"13:01"},
+    {no:"G1910",from:"济南西",to:"昆明南",depTime:"13:24"},
+    {no:"G1912",from:"青岛北",to:"重庆西",depTime:"13:47"}
+  ],
+  "6": [
+    {no:"G408",from:"成都东",to:"徐州东",depTime:"08:30"},
+    {no:"G410",from:"重庆西",to:"南京南",depTime:"08:53"},
+    {no:"G412",from:"贵阳北",to:"上海虹桥",depTime:"09:16"},
+    {no:"G414",from:"昆明南",to:"杭州东",depTime:"09:39"},
+    {no:"G416",from:"长沙南",to:"宁波",depTime:"10:02"},
+    {no:"G418",from:"武汉",to:"温州南",depTime:"10:25"},
+    {no:"G420",from:"广州南",to:"福州",depTime:"10:48"},
+    {no:"G422",from:"深圳北",to:"厦门北",depTime:"11:11"},
+    {no:"G424",from:"珠海",to:"深圳北",depTime:"11:34"},
+    {no:"G426",from:"香港西九龙",to:"广州南",depTime:"11:57"},
+    {no:"D82",from:"漯河西",to:"天津西",depTime:"12:20"},
+    {no:"D84",from:"漯河西",to:"太原南",depTime:"12:43"},
+    {no:"D86",from:"漯河西",to:"石家庄",depTime:"13:06"},
+    {no:"D88",from:"漯河西",to:"济南西",depTime:"13:29"},
+    {no:"D90",from:"漯河西",to:"青岛北",depTime:"13:52"}
+  ],
+  "7": [
+    {no:"G156",from:"太原南",to:"南京南",depTime:"08:35"},
+    {no:"G158",from:"石家庄",to:"上海虹桥",depTime:"08:58"},
+    {no:"G160",from:"济南西",to:"杭州东",depTime:"09:21"},
+    {no:"G162",from:"青岛北",to:"宁波",depTime:"09:44"},
+    {no:"G164",from:"呼和浩特东",to:"温州南",depTime:"10:07"},
+    {no:"G166",from:"哈尔滨西",to:"福州",depTime:"10:30"},
+    {no:"G168",from:"天津西",to:"厦门北",depTime:"10:53"},
+    {no:"G170",from:"北京西",to:"深圳北",depTime:"11:16"},
+    {no:"G172",from:"石家庄",to:"广州南",depTime:"11:39"},
+    {no:"G174",from:"太原南",to:"珠海",depTime:"12:02"},
+    {no:"G176",from:"济南西",to:"香港西九龙",depTime:"12:25"},
+    {no:"D642",from:"重庆西",to:"青岛北",depTime:"12:48"},
+    {no:"D644",from:"成都东",to:"济南西",depTime:"13:11"},
+    {no:"D646",from:"西安北",to:"天津西",depTime:"13:34"},
+    {no:"D648",from:"兰州西",to:"太原南",depTime:"13:57"}
+  ],
+  "8": [
+    {no:"G206",from:"北京西",to:"漯河西",depTime:"08:40"},
+    {no:"G208",from:"天津西",to:"漯河西",depTime:"09:03"},
+    {no:"G210",from:"太原南",to:"漯河西",depTime:"09:26"},
+    {no:"G212",from:"石家庄",to:"漯河西",depTime:"09:49"},
+    {no:"G214",from:"济南西",to:"漯河西",depTime:"10:12"},
+    {no:"G216",from:"青岛北",to:"漯河西",depTime:"10:35"},
+    {no:"G218",from:"呼和浩特东",to:"漯河西",depTime:"10:58"},
+    {no:"G220",from:"哈尔滨西",to:"漯河西",depTime:"11:21"},
+    {no:"D82",from:"漯河西",to:"天津西",depTime:"11:44"},
+    {no:"D84",from:"漯河西",to:"太原南",depTime:"12:07"},
+    {no:"D86",from:"漯河西",to:"石家庄",depTime:"12:30"},
+    {no:"D88",from:"漯河西",to:"济南西",depTime:"12:53"},
+    {no:"D90",from:"漯河西",to:"青岛北",depTime:"13:16"},
+    {no:"D92",from:"漯河西",to:"呼和浩特东",depTime:"13:39"},
+    {no:"D94",from:"漯河西",to:"哈尔滨西",depTime:"14:02"}
+  ],
+  "9": [
+    {no:"G210",from:"长沙南",to:"漯河西",depTime:"08:45"},
+    {no:"G212",from:"武汉",to:"漯河西",depTime:"09:08"},
+    {no:"G214",from:"贵阳北",to:"漯河西",depTime:"09:31"},
+    {no:"G216",from:"昆明南",to:"漯河西",depTime:"09:54"},
+    {no:"G218",from:"重庆西",to:"漯河西",depTime:"10:17"},
+    {no:"G220",from:"成都东",to:"漯河西",depTime:"10:40"},
+    {no:"G222",from:"西安北",to:"漯河西",depTime:"11:03"},
+    {no:"G224",from:"兰州西",to:"漯河西",depTime:"11:26"},
+    {no:"G226",from:"银川",to:"漯河西",depTime:"11:49"},
+    {no:"G228",from:"西宁",to:"漯河西",depTime:"12:12"},
+    {no:"G230",from:"乌鲁木齐",to:"漯河西",depTime:"12:35"},
+    {no:"D106",from:"郑州东",to:"杭州东",depTime:"12:58"},
+    {no:"D108",from:"郑州东",to:"宁波",depTime:"13:21"},
+    {no:"D110",from:"郑州东",to:"温州南",depTime:"13:44"},
+    {no:"D112",from:"郑州东",to:"福州",depTime:"14:07"}
+  ],
+  "10": [
+    {no:"G1902",from:"石家庄",to:"南昌西",depTime:"08:50"},
+    {no:"G1904",from:"太原南",to:"长沙南",depTime:"09:13"},
+    {no:"G1906",from:"天津西",to:"武汉",depTime:"09:36"},
+    {no:"G1908",from:"北京西",to:"贵阳北",depTime:"09:59"},
+    {no:"G1910",from:"济南西",to:"昆明南",depTime:"10:22"},
+    {no:"G1912",from:"青岛北",to:"重庆西",depTime:"10:45"},
+    {no:"G1914",from:"呼和浩特东",to:"成都东",depTime:"11:08"},
+    {no:"G1916",from:"哈尔滨西",to:"西安北",depTime:"11:31"},
+    {no:"G1918",from:"天津西",to:"兰州西",depTime:"11:54"},
+    {no:"G1920",from:"北京西",to:"银川",depTime:"12:17"},
+    {no:"G1922",from:"石家庄",to:"西宁",depTime:"12:40"},
+    {no:"G1924",from:"太原南",to:"乌鲁木齐",depTime:"13:03"},
+    {no:"D280",from:"西安北",to:"合肥南",depTime:"13:26"},
+    {no:"D282",from:"兰州西",to:"南京南",depTime:"13:49"},
+    {no:"D284",from:"银川",to:"上海虹桥",depTime:"14:12"}
+  ],
+  "11": [
+    {no:"D82",from:"漯河西",to:"天津西",depTime:"08:55"},
+    {no:"D84",from:"漯河西",to:"太原南",depTime:"09:18"},
+    {no:"D86",from:"漯河西",to:"石家庄",depTime:"09:41"},
+    {no:"D88",from:"漯河西",to:"济南西",depTime:"10:04"},
+    {no:"D90",from:"漯河西",to:"青岛北",depTime:"10:27"},
+    {no:"D92",from:"漯河西",to:"呼和浩特东",depTime:"10:50"},
+    {no:"D94",from:"漯河西",to:"哈尔滨西",depTime:"11:13"},
+    {no:"D96",from:"漯河西",to:"北京西",depTime:"11:36"},
+    {no:"D98",from:"漯河西",to:"天津西",depTime:"11:59"},
+    {no:"D100",from:"漯河西",to:"太原南",depTime:"12:22"},
+    {no:"D102",from:"漯河西",to:"石家庄",depTime:"12:45"},
+    {no:"D104",from:"漯河西",to:"济南西",depTime:"13:08"},
+    {no:"D106",from:"漯河西",to:"青岛北",depTime:"13:31"},
+    {no:"D108",from:"漯河西",to:"呼和浩特东",depTime:"13:54"},
+    {no:"D110",from:"漯河西",to:"哈尔滨西",depTime:"14:17"}
+  ],
+  "12": [
+    {no:"G408",from:"成都东",to:"徐州东",depTime:"09:00"},
+    {no:"G410",from:"重庆西",to:"南京南",depTime:"09:23"},
+    {no:"G412",from:"贵阳北",to:"上海虹桥",depTime:"09:46"},
+    {no:"G414",from:"昆明南",to:"杭州东",depTime:"10:09"},
+    {no:"G416",from:"长沙南",to:"宁波",depTime:"10:32"},
+    {no:"G418",from:"武汉",to:"温州南",depTime:"10:55"},
+    {no:"G420",from:"广州南",to:"福州",depTime:"11:18"},
+    {no:"G422",from:"深圳北",to:"厦门北",depTime:"11:41"},
+    {no:"G424",from:"珠海",to:"深圳北",depTime:"12:04"},
+    {no:"G426",from:"香港西九龙",to:"广州南",depTime:"12:27"},
+    {no:"G428",from:"长沙南",to:"漯河西",depTime:"12:50"},
+    {no:"G430",from:"武汉",to:"漯河西",depTime:"13:13"},
+    {no:"G432",from:"贵阳北",to:"漯河西",depTime:"13:36"},
+    {no:"G434",from:"昆明南",to:"漯河西",depTime:"13:59"},
+    {no:"G436",from:"重庆西",to:"漯河西",depTime:"14:22"}
+  ]
+};
 
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 
-// 更新顶部站名
+function pad2(n){
+  return n < 10 ? "0" + n : n;
+}
+
+function getDayTs(h, m){
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m).getTime();
+}
+
+function getMinDiff(targetH, targetM){
+  const now = new Date();
+  const target = getDayTs(targetH, targetM);
+  const diffMs = target - now.getTime();
+  return Math.floor(diffMs / 60000);
+}
+
 function updateStationName(){
   $("#cnStation").innerText = stationCn;
   $("#enStation").innerText = stationEn;
 }
-// 格式化时间
-function pad2(n){return n<10?"0"+n:n;}
-function getNowHM(){
-  const d = new Date();
-  return {h:d.getHours(),m:d.getMinutes(),s:d.getSeconds()};
-}
-// 获取当天时间戳
-function getDayTs(h,m){
+
+function updateDebug(){
+  const box = $("#debugBox");
+  if(!box) return;
+
   const now = new Date();
-  return new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m).getTime();
+  const lines = [];
+  lines.push("当前时间：" + now.toLocaleTimeString("zh-CN"));
+
+  for(const plat of Object.keys(platformTrains)){
+    const trains = platformTrains[plat];
+    lines.push("站台" + plat + "：" + trains.length + "趟");
+    trains.slice(0, 3).forEach(t=>{
+      lines.push("  " + t.no + " " + t.from + "→" + t.to + " " + t.depTime);
+    });
+    if(trains.length > 3){
+      lines.push("  ...共" + trains.length + "趟");
+    }
+  }
+
+  box.innerText = lines.join("\n");
 }
-// 计算分钟差
-function getMinDiff(targetH,targetM){
-  const now = new Date();
-  const target = getDayTs(targetH,targetM);
-  const diffMs = target - now.getTime();
-  return Math.floor(diffMs / (60*1000));
-}
-// 单独渲染单条车次
+
 function renderSingleTrain(box, train, isEven){
   if(isEven){
     box.innerHTML = `
@@ -240,35 +739,50 @@ function renderSingleTrain(box, train, isEven){
     `;
   }
 }
-// 渲染单站台面板（修复切换逻辑）
+
 function renderPlatform(platEl, platNum){
   const contentBox = platEl.querySelector(".platform-content");
   const trains = platformTrains[platNum] || [];
   const now = new Date();
   const stationName = stationCn;
+
   let allValidTrains = [];
 
   for(const t of trains){
-    const [depH,depM] = t.depTime.split(":").map(Number);
-    const diffMin = getMinDiff(depH,depM);
-    const isStart = t.from === stationName;
-    const isArrive = t.to === stationName;
-    const depTs = getDayTs(depH,depM);
-    const arriveDiff = now.getTime() - depTs;
+    const [depH, depM] = t.depTime.split(":").map(Number);
+    const diffMin = getMinDiff(depH, depM);
+    const isStart = t.from === "漯河西";
+    const isArrive = t.to === "漯河西";
+    const depTs = getDayTs(depH, depM);
+    const departDiff = now.getTime() - depTs;
+
     let canShow = false;
 
     if(isStart){
-      if(diffMin >= 0 && diffMin <= DEPART_LOCAL_MIN) canShow = true;
+      if(diffMin >= 0 && diffMin <= DEPART_LOCAL_MIN){
+        canShow = true;
+      }
     }else if(!isArrive){
-      if(diffMin >=0 && diffMin <= PASS_LOCAL_MIN) canShow = true;
+      if(diffMin >= 0 && diffMin <= PASS_LOCAL_MIN){
+        canShow = true;
+      }
     }
-    if(isArrive && arriveDiff >=0 && arriveDiff <= ARRIVE_CLEAR_MIN*60*1000){
+
+    if(isArrive && departDiff >= 0 && departDiff <= ARRIVE_CLEAR_MIN * 60000){
       canShow = true;
     }
-    if(!isArrive && arriveDiff > CLEAR_AFTER_DEPART_MIN*60*1000) continue;
-    if(canShow) allValidTrains.push({...t, diffMin, isStart, isArrive, depTs});
+
+    if(!isArrive && departDiff > CLEAR_AFTER_DEPART_MIN * 60000){
+      continue;
+    }
+
+    if(canShow){
+      allValidTrains.push({...t, depTs, isArrive});
+    }
   }
-  allValidTrains.sort((a,b)=> a.depTs - b.depTs);
+
+  allValidTrains.sort((a, b) => a.depTs - b.depTs);
+
   if(allValidTrains.length === 0){
     contentBox.innerHTML = `
       <div class="empty-text">
@@ -278,39 +792,50 @@ function renderPlatform(platEl, platNum){
     `;
     return;
   }
+
   const firstTrain = allValidTrains[0];
-  const hasNextTrain = allValidTrains.length > 1;
-  const nowTs = now.getTime();
-  const firstDepartDiff = nowTs - firstTrain.depTs;
-  if(hasNextTrain){
-    if((!firstTrain.isArrive && firstDepartDiff > 0) || (firstTrain.isArrive && firstDepartDiff > 60*1000)){
+  const hasNext = allValidTrains.length > 1;
+  const gapNow = now.getTime() - firstTrain.depTs;
+
+  if(hasNext){
+    if((!firstTrain.isArrive && gapNow > 0) || (firstTrain.isArrive && gapNow > 60000)){
       renderSingleTrain(contentBox, allValidTrains[1], platEl.classList.contains("platform-even"));
       return;
     }
   }
+
   renderSingleTrain(contentBox, firstTrain, platEl.classList.contains("platform-even"));
 }
-// 刷新全部站台
+
 function refreshAllPlatform(){
-  $$(".platform-even,.platform-odd").forEach(el=>{
+  $$(".platform-even, .platform-odd").forEach(el=>{
     const p = el.dataset.station;
     renderPlatform(el, p);
-  })
+  });
+  updateDebug();
 }
-// 实时转动时钟
-function updateClock(){
+
+function updateAllClocks(){
   const now = new Date();
   const h = now.getHours() % 12;
   const m = now.getMinutes();
+
   const hDeg = h * 30 + m * 0.5;
   const mDeg = m * 6;
-  $("#hHand").style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
-  $("#mHand").style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+
+  $$(".h-hand").forEach(el=>{
+    el.style.transform = "translateX(-50%) rotate(" + hDeg + "deg)";
+  });
+
+  $$(".m-hand").forEach(el=>{
+    el.style.transform = "translateX(-50%) rotate(" + mDeg + "deg)";
+  });
 }
-// 切换编辑面板
+
 function toggleEditPanel(){
   const panel = $("#editPanel");
   const btn = $("#toggleEdit");
+
   if(panel.style.display === "block"){
     panel.style.display = "none";
     btn.innerText = "打开后台编辑";
@@ -319,49 +844,67 @@ function toggleEditPanel(){
     btn.innerText = "关闭后台编辑";
     $("#editCnStation").value = stationCn;
     $("#editEnStation").value = stationEn;
+    updateDebug();
   }
 }
-// 添加车次（添加后立刻刷新）
+
 function addTrain(){
   const plat = $("#editPlat").value.trim();
   const no = $("#editTrainNo").value.trim();
   const from = $("#editFrom").value.trim();
   const to = $("#editTo").value.trim();
   const dep = $("#editDep").value.trim();
+
   if(!plat || !no || !from || !to || !dep){
     alert("请完整填写所有车次信息");
     return;
   }
-  if(!/^\d+$/.test(plat) || plat<1 || plat>12){
+
+  if(!/^\d+$/.test(plat) || plat < 1 || plat > 12){
     alert("站台号必须是1-12数字");
     return;
   }
+
   if(!/^\d{1,2}:\d{2}$/.test(dep)){
     alert("开车时间格式 HH:mm");
     return;
   }
-  if(!platformTrains[plat]) platformTrains[plat] = [];
-  platformTrains[plat].push({no,from,to,depTime:dep});
+
+  if(!platformTrains[plat]){
+    platformTrains[plat] = [];
+  }
+
+  platformTrains[plat].push({
+    no,
+    from,
+    to,
+    depTime: dep
+  });
+
   $("#editTrainNo").value = "";
   $("#editFrom").value = "";
   $("#editTo").value = "";
   $("#editDep").value = "";
+
   refreshAllPlatform();
+  alert("已添加车次到站台" + plat);
 }
-// 清空站台
+
 function clearPlatform(){
   const plat = $("#editPlat").value.trim();
   if(!plat) return;
+
   platformTrains[plat] = [];
   refreshAllPlatform();
+  alert("已清空站台" + plat);
 }
-// 保存站名
+
 function saveStationName(){
   stationCn = $("#editCnStation").value.trim();
   stationEn = $("#editEnStation").value.trim();
   updateStationName();
 }
-// 绑定事件
+
 function bindEvents(){
   $("#toggleEdit").addEventListener("click", toggleEditPanel);
   $("#btnAddTrain").addEventListener("click", addTrain);
@@ -369,16 +912,19 @@ function bindEvents(){
   $("#editCnStation").addEventListener("change", saveStationName);
   $("#editEnStation").addEventListener("change", saveStationName);
 }
-// 初始化
+
 function init(){
   updateStationName();
   bindEvents();
-  updateClock();
+  updateAllClocks();
   refreshAllPlatform();
-  clockTimer = setInterval(updateClock, 1000);
-  refreshTimer = setInterval(refreshAllPlatform, 1000);
+
+  setInterval(updateAllClocks, 1000);
+  setInterval(refreshAllPlatform, 1000);
 }
+
 window.onload = init;
 </script>
+
 </body>
 </html>
