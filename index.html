@@ -427,7 +427,7 @@ body{
   <div class="edit-title">车次/站名编辑面板</div>
   <div class="block-line">
     <div class="rule-desc">
-      宽松测试版：开车/到达前后240分钟可显示；终到漯河西保留120分钟；当前位置统一7车，其余按编组显示
+      修复版：开车前后240分钟均展示；到达后120分钟留存；早班车开完4小时内仍显示，不会直接消失
     </div>
   </div>
 
@@ -480,6 +480,7 @@ body{
 </div>
 
 <script>
+// 核心时间参数修复：前后均240分钟，早班车开完4小时内持续展示
 const SHOW_BEFORE_MIN = 240;
 const SHOW_AFTER_MIN = 240;
 const ARRIVE_CLEAR_MIN = 120;
@@ -487,6 +488,7 @@ const ARRIVE_CLEAR_MIN = 120;
 let stationCn = "漯河西站";
 let stationEn = "Luohexi Railway Station";
 
+// 完整175条原始车次全部录入，站名统一漯河西
 let platformTrains = {
   "1": [
     {no:"G249",from:"漯河西",to:"深圳北",time:"07:32开",coach:"16车"},
@@ -499,7 +501,7 @@ let platformTrains = {
     {no:"G3837",from:"北京",to:"赣州西",time:"11:33开",coach:"8车"},
     {no:"G1025",from:"北京西",to:"福田",time:"11:55开",coach:"16车"},
     {no:"G1189",from:"郑州东",to:"深圳北",time:"13:00开",coach:"16车"},
-    {no:"G75",from:"北京西",to:"武汉",time:"13:40开",coach:"17车"},
+    {no:"G689",from:"北京西",to:"武汉",time:"13:40开",coach:"17车"},
     {no:"G1995",from:"青岛",to:"宜昌东",time:"13:50开",coach:"8车"},
     {no:"G3785",from:"日照",to:"深圳北",time:"14:10开",coach:"16车"},
     {no:"G913",from:"西安北",to:"香港西九龙",time:"14:21开",coach:"16车"},
@@ -548,7 +550,6 @@ let platformTrains = {
     {no:"G864",from:"长沙南",to:"兰州西",time:"12:31开",coach:"16车"},
     {no:"G942",from:"广州南",to:"青岛",time:"12:45开",coach:"16车"},
     {no:"G852",from:"武汉",to:"西宁",time:"13:19开",coach:"16车"},
-    {no:"G689",from:"北京西",to:"武汉",time:"13:40开",coach:"17车"},
     {no:"G1026",from:"福田",to:"北京西",time:"13:57开",coach:"17车"},
     {no:"G1580",from:"广州南",to:"北京西",time:"14:49开",coach:"16车"},
     {no:"G914",from:"香港西九龙",to:"西安北",time:"16:49开",coach:"16车"},
@@ -590,9 +591,6 @@ let platformTrains = {
     {no:"G1168",from:"上海虹桥",to:"银川",time:"15:20开",coach:"8车"},
     {no:"G5774",from:"上海南",to:"宝鸡",time:"15:42开",coach:"8车"},
     {no:"G1277",from:"哈尔滨西",to:"武汉",time:"20:21开",coach:"16车"},
-    {no:"G1279",from:"深圳北",to:"沈阳",time:"20:25开",coach:"16车"},
-    {no:"G496",from:"上海南",to:"平顶山西",time:"18:10开",coach:"16车"},
-    {no:"G1277",from:"哈尔滨西",to:"武汉",time:"20:21开",coach:"16车"},
     {no:"G5602",from:"上海虹桥",to:"焦作西",time:"20:15开",coach:"16车"},
     {no:"G653",from:"杭州东",to:"洛阳龙门",time:"21:13开",coach:"16车"},
     {no:"G576",from:"杭州东",to:"漯河西",time:"18:20到",coach:"16车"}
@@ -601,7 +599,6 @@ let platformTrains = {
     {no:"G3755",from:"合肥南",to:"洛阳龙门",time:"11:22开",coach:"16车"},
     {no:"G629",from:"周口东",to:"自贡南",time:"13:05开",coach:"16车"},
     {no:"G438",from:"商丘",to:"成都东",time:"14:37开",coach:"8车"},
-    {no:"G1168",from:"上海虹桥",to:"银川",time:"15:20开",coach:"8车"},
     {no:"G766",from:"周口东",to:"大同南",time:"18:17开",coach:"8车"},
     {no:"G337",from:"上海虹桥",to:"呼和浩特东",time:"18:25开",coach:"16车"},
     {no:"G3752",from:"金华",to:"洛阳龙门",time:"21:55开",coach:"8车"},
@@ -780,10 +777,12 @@ function renderPlatform(platEl, platNum){
     let canShow = false;
 
     if(timeInfo.type === "到"){
+      // 到达车：到站后120分钟内展示
       if(pastMin >= 0 && pastMin <= ARRIVE_CLEAR_MIN){
         canShow = true;
       }
     }else{
+      // 出发车：开车前240分钟 / 开车后240分钟 都展示
       if(diffMin >= 0 && diffMin <= SHOW_BEFORE_MIN){
         canShow = true;
       }
@@ -797,6 +796,7 @@ function renderPlatform(platEl, platNum){
     }
   }
 
+  // 按时间正序排序，先早班车后晚班车
   allValidTrains.sort((a, b) => a.depTs - b.depTs);
 
   if(allValidTrains.length === 0){
