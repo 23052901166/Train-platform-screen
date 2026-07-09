@@ -427,7 +427,7 @@ body{
   <div class="edit-title">车次/站台编辑面板</div>
   <div class="block-line">
     <div class="rule-desc">
-      真实站台屏逻辑：每个站台仅显示**距离当前时间最近1趟**有效列车；开车前240分钟上屏，发车立刻下屏，到达车到站保留120分钟；无车次显示宣传标语
+      规则：出发车开车前8分钟上屏、发车立刻下屏；到达车到站前5分钟上屏、到站后1分钟下屏；单站台仅显示最近一趟有效车次
     </div>
   </div>
 
@@ -480,14 +480,15 @@ body{
 </div>
 
 <script>
-// 时间阈值（国铁站台屏标准）
-const SHOW_BEFORE_MIN = 240;
-const ARRIVE_CLEAR_MIN = 120;
+// 时间阈值配置
+const DEP_SHOW_BEFORE = 8;    // 出发：开车前8分钟上屏
+const ARR_SHOW_BEFORE = 5;    // 到达：到站前5分钟上屏
+const ARR_HOLD_AFTER = 1;     // 到达：到站后保留1分钟下屏
 
 let stationCn = "漯河西站";
 let stationEn = "Luohexi Railway Station";
 
-// 完整175条原始车次
+// 完整全天车次数据
 let platformTrains = {
   "1": [
     {no:"G249",from:"漯河西",to:"深圳北",time:"07:32开",coach:"16车"},
@@ -703,6 +704,8 @@ function updateDebug(){
   const now = new Date();
   const lines = [];
   lines.push("当前时间：" + now.toLocaleTimeString("zh-CN"));
+  lines.push(`出发车：开车前${DEP_SHOW_BEFORE}分钟上屏，发车立刻下屏`);
+  lines.push(`到达车：到站前${ARR_SHOW_BEFORE}分钟上屏，到站后${ARR_HOLD_AFTER}分钟下屏`);
   for(const plat of Object.keys(platformTrains)){
     const trains = platformTrains[plat];
     lines.push("站台" + plat + "：共" + trains.length + "趟");
@@ -755,19 +758,23 @@ function renderPlatform(platEl, platNum){
     const timeInfo = parseTimeValue(t.time);
     if(!timeInfo) continue;
     const diffMin = getMinDiff(timeInfo.h, timeInfo.m);
-    const pastMin = -diffMin;
     let ok = false;
-    if(timeInfo.type === "到"){
-      if(pastMin >= 0 && pastMin <= ARRIVE_CLEAR_MIN) ok = true;
+    if(timeInfo.type === "开"){
+      // 出发：大于0（未发车）、且距离开车≤8分钟
+      if(diffMin > 0 && diffMin <= DEP_SHOW_BEFORE){
+        ok = true;
+      }
     }else{
-      // 开车前240分钟内 才显示，发车后直接隐藏（真实站台屏逻辑）
-      if(diffMin >= 0 && diffMin <= SHOW_BEFORE_MIN) ok = true;
+      // 到达：到站前5分钟 ~ 到站后1分钟
+      if(diffMin >= -ARR_HOLD_AFTER && diffMin <= ARR_SHOW_BEFORE){
+        ok = true;
+      }
     }
     if(ok){
       validList.push({...t, ts:getDayTs(timeInfo.h, timeInfo.m)});
     }
   }
-  // 只保留时间最近1趟
+  // 按时间由近到远排序，只取第一趟
   validList.sort((a,b)=>a.ts - b.ts);
   if(validList.length === 0){
     contentBox.innerHTML = `<div class="empty-text">不忘初心，牢记使命。<br>交通强国，铁路先行。</div>`;
@@ -821,7 +828,7 @@ function addTrain(){
     return;
   }
   if(!/^\d+$/.test(plat)||plat<1||plat>12){
-    alert("站台1-12");
+    alert("站台范围1-12");
     return;
   }
   if(!/^\d{1,2}:\d{2}(开|到)$/.test(dep)){
@@ -836,7 +843,7 @@ function addTrain(){
   platformTrains[plat].push({no,from,to,time:dep,coach});
   $("#editTrainNo,#editFrom,#editTo,#editDep,#editCoach").value = "";
   refreshAllPlatform();
-  alert("添加成功");
+  alert("添加车次成功");
 }
 
 function clearPlatform(){
@@ -844,7 +851,7 @@ function clearPlatform(){
   if(!plat) return;
   platformTrains[plat] = [];
   refreshAllPlatform();
-  alert("清空站台"+plat);
+  alert("已清空站台"+plat);
 }
 
 function saveStationName(){
