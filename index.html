@@ -67,19 +67,24 @@ body{
 .platform-even{
   flex:1;
   height:100%;
-  background:#111;
+  /* 渐变炭黑底色，替代纯#111 */
+  background: linear-gradient(180deg, #181818, #0f0f0f);
   color:#ffdd00;
   display:grid;
   grid-template-columns:60px 1fr;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+  border:1px solid #222;
 }
 
 .platform-odd{
   flex:1;
   height:100%;
-  background:#111;
+  background: linear-gradient(180deg, #181818, #0f0f0f);
   color:#ffdd00;
   display:grid;
   grid-template-columns:1fr 60px;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+  border:1px solid #222;
 }
 
 .platform-num{
@@ -89,7 +94,14 @@ body{
   font-size:8vh;
   font-weight:bold;
   color:#fff;
-  background:#0a1828;
+  /* 侧边栏深蓝渐变 */
+  background: linear-gradient(180deg, #142b44, #081422);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  border-right:1px solid #243a52;
+}
+.platform-odd .platform-num{
+  border-right:none;
+  border-left:1px solid #243a52;
 }
 
 .platform-content{
@@ -111,6 +123,7 @@ body{
   font-weight:bold;
   color:#ffdd00;
   padding:0 4px;
+  text-shadow: 0 0 6px rgba(255,221,0,0.25);
 }
 
 .train-route{
@@ -118,6 +131,7 @@ body{
   color:#ffdd00;
   text-align:center;
   line-height:1.2;
+  text-shadow: 0 0 4px rgba(255,221,0,0.2);
 }
 
 .train-coach-guide{
@@ -125,6 +139,7 @@ body{
   color:#4cff4c;
   text-align:center;
   line-height:1.3;
+  text-shadow: 0 0 4px rgba(76,255,76,0.2);
 }
 
 .empty-text{
@@ -139,31 +154,74 @@ body{
   font-size:4vh;
   font-weight:bold;
   line-height:1.6;
+  opacity:0.82;
 }
 
+/* ========== 优化后完整表盘样式 ========== */
 .clock-wrap{
   width:14vh;
   height:14vh;
   border-radius:50%;
-  background:#fff;
+  /* 多层金属拉丝渐变，融入页面深蓝冷调 */
+  background: linear-gradient(135deg, #d9d9d9 0%, #c0c0c0 30%, #a8a8a8 70%, #b9b9b9 100%);
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
   flex-shrink:0;
+  /* 分层立体阴影，统一页面光源 */
+  box-shadow: 
+    0 6px 16px rgba(0,0,0,0.7),
+    inset 0 3px 6px rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(0,0,0,0.2);
 }
 .clock-face{
   width:92%;
   height:92%;
   border-radius:50%;
   position:relative;
-  background:#fff;
+  /* 柔和米白哑光表盘，双区域玻璃反光 */
+  background-image: 
+    radial-gradient(ellipse at 25% 28%, rgba(255,255,255,0.38) 0%, transparent 48%),
+    radial-gradient(ellipse at 65% 62%, rgba(255,255,255,0.12) 0%, transparent 40%),
+    linear-gradient(160deg, #f8f8f8, #efefef);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.12);
+}
+/* 时分刻度外圈 */
+.clock-face::before{
+  content:"";
+  position:absolute;
+  width:96%;
+  height:96%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background-image:
+    /* 整点粗刻度 12/3/6/9 */
+    linear-gradient(#222 0 3px, transparent 3px 100%),
+    linear-gradient(90deg,#222 0 3px, transparent 3px 100%),
+    linear-gradient(180deg,#222 0 3px, transparent 3px 100%),
+    linear-gradient(270deg,#222 0 3px, transparent 3px 100%),
+    /* 每5分钟细刻度 剩余8个点位 */
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
+    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%);
+  background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px, 100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;
+  background-position: 50% 0, 100% 50%, 50% 100%, 0 50%, 8.33% 50%,16.66% 50%,25% 50%,33.33% 50%,41.66% 50%,58.33% 50%,66.66% 50%,75% 50%,83.33% 50%;
+  background-repeat: no-repeat;
 }
 .clock-num{
   position:absolute;
   font-size:2vh;
-  color:#000;
+  color:#1a1a1a;
   font-weight:bold;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.8);
 }
 .clock-num12{top:4px;left:50%;transform:translateX(-50%);}
 .clock-num3{right:4px;top:50%;transform:translateY(-50%);}
@@ -175,8 +233,12 @@ body{
   left:50%;
   bottom:50%;
   transform-origin:bottom center;
-  background:#000;
-  border-radius:4px;
+  border-radius:6px;
+  /* 金属渐变+顶部细微高光 */
+  background: linear-gradient(to right, #1a1a1a, #000 45%, #222 55%, #1a1a1a);
+  box-shadow: 0 0 4px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.15);
+  /* 指针顺滑过渡动画 */
+  transition: transform 0.4s ease-out;
 }
 .h-hand{
   width:8px;
@@ -190,6 +252,21 @@ body{
   margin-left:-3px;
   z-index:4;
 }
+/* 分层中心转轴圆点 */
+.clock-face::after{
+  content:"";
+  position:absolute;
+  width:1.8vh;
+  height:1.8vh;
+  border-radius:50%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background: radial-gradient(circle, #111 35%, #000 100%);
+  z-index:10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 2px rgba(80,80,80,0.3);
+}
+/* ========== 表盘样式结束 ========== */
 
 .edit-btn{
   position:fixed;
@@ -427,7 +504,7 @@ body{
   <div class="edit-title">车次/站台编辑面板</div>
   <div class="block-line">
     <div class="rule-desc">
-      规则：出发车开车前8分钟上屏、发车立刻下屏；到达车到站前5分钟上屏、到站后1分钟下屏；单站台仅显示最近一趟有效车次
+      规则：出发车开车前15分钟上屏、发车立刻下屏；到达车到站前5分钟上屏、到站后1分钟下屏；单站台仅显示最近一趟有效车次
     </div>
   </div>
 
@@ -480,8 +557,8 @@ body{
 </div>
 
 <script>
-// 时间阈值配置
-const DEP_SHOW_BEFORE = 8;    // 出发：开车前8分钟上屏
+// 时间阈值配置 已修改：发车前15分钟上屏
+const DEP_SHOW_BEFORE = 15;    // 出发：开车前15分钟上屏
 const ARR_SHOW_BEFORE = 5;    // 到达：到站前5分钟上屏
 const ARR_HOLD_AFTER = 1;     // 到达：到站后保留1分钟下屏
 
@@ -760,7 +837,7 @@ function renderPlatform(platEl, platNum){
     const diffMin = getMinDiff(timeInfo.h, timeInfo.m);
     let ok = false;
     if(timeInfo.type === "开"){
-      // 出发：大于0（未发车）、且距离开车≤8分钟
+      // 出发：大于0（未发车）、且距离开车≤15分钟
       if(diffMin > 0 && diffMin <= DEP_SHOW_BEFORE){
         ok = true;
       }
@@ -832,16 +909,16 @@ function addTrain(){
     return;
   }
   if(!/^\d{1,2}:\d{2}(开|到)$/.test(dep)){
-    alert("时间格式：XX:XX开 / XX:XX到");
+    alert("时间格式：HH:mm开 / HH:mm到");
     return;
   }
-  if(!/^(8车|16车|17车|18车)$/.test(coach)){
-    alert("编组仅支持8/16/17/18车");
+  if(!["8车","16车","17车","18车"].includes(coach)){
+    alert("编组仅支持 8车 / 16车 / 17车 / 18车");
     return;
   }
   if(!platformTrains[plat]) platformTrains[plat] = [];
   platformTrains[plat].push({no,from,to,time:dep,coach});
-  $("#editTrainNo,#editFrom,#editTo,#editDep,#editCoach").value = "";
+  $("#editTrainNo,#editFrom,#editTo,#editDep,#editPlat,#editCoach").value = "";
   refreshAllPlatform();
   alert("添加车次成功");
 }
@@ -878,6 +955,5 @@ function init(){
 }
 window.onload = init;
 </script>
-
 </body>
 </html>
