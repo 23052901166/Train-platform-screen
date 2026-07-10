@@ -145,25 +145,37 @@ body{
   width:14vh;
   height:14vh;
   border-radius:50%;
-  background:#fff;
+  /* 金属表圈渐变 */
+  background: linear-gradient(145deg, #e6e6e6, #b8b8b8);
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
   flex-shrink:0;
+  /* 立体阴影 */
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.6),
+    inset 0 2px 4px rgba(255,255,255,0.4);
 }
 .clock-face{
   width:92%;
   height:92%;
   border-radius:50%;
   position:relative;
-  background:#fff;
+  /* 哑光表盘+玻璃高光反光 */
+  background-image: 
+    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.35) 0%, transparent 45%),
+    linear-gradient(160deg, #f8f8f8, #efefef);
+  /* 内凹玻璃阴影 */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.12);
 }
 .clock-num{
   position:absolute;
   font-size:2vh;
-  color:#000;
+  color:#1a1a1a;
   font-weight:bold;
+  /* 文字浮雕效果 */
+  text-shadow: 0 1px 1px rgba(255,255,255,0.8);
 }
 .clock-num12{top:4px;left:50%;transform:translateX(-50%);}
 .clock-num3{right:4px;top:50%;transform:translateY(-50%);}
@@ -175,8 +187,10 @@ body{
   left:50%;
   bottom:50%;
   transform-origin:bottom center;
-  background:#000;
   border-radius:4px;
+  /* 金属渐变指针 */
+  background: linear-gradient(to right, #222222, #000000, #222222);
+  box-shadow: 0 0 3px rgba(0,0,0,0.4);
 }
 .h-hand{
   width:8px;
@@ -190,7 +204,20 @@ body{
   margin-left:-3px;
   z-index:4;
 }
-
+/* 表盘中心转轴圆点，无需改HTML */
+.clock-face::after{
+  content:"";
+  position:absolute;
+  width:1.8vh;
+  height:1.8vh;
+  border-radius:50%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background: linear-gradient(145deg, #333, #000);
+  z-index:10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
 .edit-btn{
   position:fixed;
   top:10px;
