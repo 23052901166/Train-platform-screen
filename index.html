@@ -23,7 +23,7 @@ body{
 .station-header{
   width:100%;
   height:18vh;
-  background:#0f243a;
+  background:linear-gradient(180deg,#0f243a,#0a1828);
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -31,6 +31,7 @@ body{
   color:#fff;
   flex-shrink:0;
   margin-bottom:12px;
+  box-shadow:inset 0 0 14px rgba(0,0,0,0.4);
 }
 .station-cn{
   font-size:9vh;
@@ -59,32 +60,28 @@ body{
 
 .platform-group{
   display:flex;
-  gap:12px;
+  gap:14px;
   align-items:center;
   height:24vh;
 }
 
-.platform-even{
+.platform-even,.platform-odd{
   flex:1;
   height:100%;
-  /* 渐变炭黑底色，替代纯#111 */
-  background: linear-gradient(180deg, #181818, #0f0f0f);
+  background:linear-gradient(180deg,#1c1c18,#0f0f0f);
   color:#ffdd00;
+  box-shadow:inset 0 0 12px rgba(0,0,0,0.5);
+  border:1px solid #222;
+  border-radius:5px;
+  transition:opacity 0.3s ease;
+}
+.platform-even{
   display:grid;
   grid-template-columns:60px 1fr;
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
-  border:1px solid #222;
 }
-
 .platform-odd{
-  flex:1;
-  height:100%;
-  background: linear-gradient(180deg, #181818, #0f0f0f);
-  color:#ffdd00;
   display:grid;
   grid-template-columns:1fr 60px;
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
-  border:1px solid #222;
 }
 
 .platform-num{
@@ -94,14 +91,17 @@ body{
   font-size:8vh;
   font-weight:bold;
   color:#fff;
-  /* 侧边栏深蓝渐变 */
-  background: linear-gradient(180deg, #142b44, #081422);
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  background:linear-gradient(180deg,#142b44,#081422);
+  box-shadow:inset 0 0 10px rgba(0,0,0,0.5);
+  text-shadow:0 0 4px rgba(255,255,255,0.2);
+}
+.platform-even .platform-num{
   border-right:1px solid #243a52;
+  border-radius:5px 0 0 5px;
 }
 .platform-odd .platform-num{
-  border-right:none;
   border-left:1px solid #243a52;
+  border-radius:0 5px 5px 0;
 }
 
 .platform-content{
@@ -123,23 +123,21 @@ body{
   font-weight:bold;
   color:#ffdd00;
   padding:0 4px;
-  text-shadow: 0 0 6px rgba(255,221,0,0.25);
+  text-shadow:0 0 6px rgba(255,221,0,0.25);
 }
-
 .train-route{
   font-size:4vh;
   color:#ffdd00;
   text-align:center;
   line-height:1.2;
-  text-shadow: 0 0 4px rgba(255,221,0,0.2);
+  text-shadow:0 0 4px rgba(255,221,0,0.2);
 }
-
 .train-coach-guide{
   font-size:3.5vh;
-  color:#4cff4c;
+  color:#60e860;
   text-align:center;
   line-height:1.3;
-  text-shadow: 0 0 4px rgba(76,255,76,0.2);
+  text-shadow:0 0 4px rgba(96,232,96,0.18);
 }
 
 .empty-text{
@@ -153,24 +151,22 @@ body{
   width:100%;
   font-size:4vh;
   font-weight:bold;
-  line-height:1.6;
+  line-height:1.9;
   opacity:0.82;
 }
 
-/* ========== 优化后完整表盘样式 ========== */
+/* 表盘完整优化样式 */
 .clock-wrap{
   width:14vh;
   height:14vh;
   border-radius:50%;
-  /* 多层金属拉丝渐变，融入页面深蓝冷调 */
-  background: linear-gradient(135deg, #d9d9d9 0%, #c0c0c0 30%, #a8a8a8 70%, #b9b9b9 100%);
+  background:linear-gradient(135deg,#d9d9d9 0%,#c0c0c0 30%,#a8a8a8 70%,#b9b9b9 100%);
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
   flex-shrink:0;
-  /* 分层立体阴影，统一页面光源 */
-  box-shadow: 
+  box-shadow:
     0 6px 16px rgba(0,0,0,0.7),
     inset 0 3px 6px rgba(255,255,255,0.5),
     inset 0 -2px 4px rgba(0,0,0,0.2);
@@ -180,14 +176,12 @@ body{
   height:92%;
   border-radius:50%;
   position:relative;
-  /* 柔和米白哑光表盘，双区域玻璃反光 */
-  background-image: 
-    radial-gradient(ellipse at 25% 28%, rgba(255,255,255,0.38) 0%, transparent 48%),
-    radial-gradient(ellipse at 65% 62%, rgba(255,255,255,0.12) 0%, transparent 40%),
-    linear-gradient(160deg, #f8f8f8, #efefef);
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.12);
+  background-image:
+    radial-gradient(ellipse at 25% 28%,rgba(255,255,255,0.38) 0%,transparent 48%),
+    radial-gradient(ellipse at 65% 62%,rgba(255,255,255,0.12) 0%,transparent 40%),
+    linear-gradient(160deg,#f8f8f8,#efefef);
+  box-shadow:inset 0 0 10px rgba(0,0,0,0.12);
 }
-/* 时分刻度外圈 */
 .clock-face::before{
   content:"";
   position:absolute;
@@ -198,30 +192,28 @@ body{
   transform:translate(-50%,-50%);
   border-radius:50%;
   background-image:
-    /* 整点粗刻度 12/3/6/9 */
-    linear-gradient(#222 0 3px, transparent 3px 100%),
-    linear-gradient(90deg,#222 0 3px, transparent 3px 100%),
-    linear-gradient(180deg,#222 0 3px, transparent 3px 100%),
-    linear-gradient(270deg,#222 0 3px, transparent 3px 100%),
-    /* 每5分钟细刻度 剩余8个点位 */
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%),
-    radial-gradient(circle at center, transparent 92%, #444 92% 94%, transparent 94%);
-  background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px, 100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;
-  background-position: 50% 0, 100% 50%, 50% 100%, 0 50%, 8.33% 50%,16.66% 50%,25% 50%,33.33% 50%,41.66% 50%,58.33% 50%,66.66% 50%,75% 50%,83.33% 50%;
-  background-repeat: no-repeat;
+    linear-gradient(#222 0 3px,transparent 3px 100%),
+    linear-gradient(90deg,#222 0 3px,transparent 3px 100%),
+    linear-gradient(180deg,#222 0 3px,transparent 3px 100%),
+    linear-gradient(270deg,#222 0 3px,transparent 3px 100%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%),
+    radial-gradient(circle at center,transparent 92%,#444 92% 94%,transparent 94%);
+  background-size:2px 100%,100% 2px,2px 100%,100% 2px,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;
+  background-position:50% 0,100% 50%,50% 100%,0 50%,8.33% 50%,16.66% 50%,25% 50%,33.33% 50%,41.66% 50%,58.33% 50%,66.66% 50%,75% 50%,83.33% 50%;
+  background-repeat:no-repeat;
 }
 .clock-num{
   position:absolute;
   font-size:2vh;
   color:#1a1a1a;
   font-weight:bold;
-  text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+  text-shadow:0 1px 1px rgba(255,255,255,0.8);
 }
 .clock-num12{top:4px;left:50%;transform:translateX(-50%);}
 .clock-num3{right:4px;top:50%;transform:translateY(-50%);}
@@ -234,11 +226,9 @@ body{
   bottom:50%;
   transform-origin:bottom center;
   border-radius:6px;
-  /* 金属渐变+顶部细微高光 */
-  background: linear-gradient(to right, #1a1a1a, #000 45%, #222 55%, #1a1a1a);
-  box-shadow: 0 0 4px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.15);
-  /* 指针顺滑过渡动画 */
-  transition: transform 0.4s ease-out;
+  background:linear-gradient(to right,#1a1a1a,#000 45%,#222 55%,#1a1a1a);
+  box-shadow:0 0 4px rgba(0,0,0,0.5),inset 0 1px 2px rgba(255,255,255,0.15);
+  transition:transform 0.25s ease-out;
 }
 .h-hand{
   width:8px;
@@ -252,7 +242,6 @@ body{
   margin-left:-3px;
   z-index:4;
 }
-/* 分层中心转轴圆点 */
 .clock-face::after{
   content:"";
   position:absolute;
@@ -262,11 +251,10 @@ body{
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  background: radial-gradient(circle, #111 35%, #000 100%);
+  background:radial-gradient(circle,#111 35%,#000 100%);
   z-index:10;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 2px rgba(80,80,80,0.3);
+  box-shadow:0 1px 3px rgba(0,0,0,0.5),inset 0 1px 2px rgba(80,80,80,0.3);
 }
-/* ========== 表盘样式结束 ========== */
 
 .edit-btn{
   position:fixed;
@@ -281,7 +269,6 @@ body{
   font-size:14px;
   cursor:pointer;
 }
-
 .edit-panel{
   position:fixed;
   top:50px;
@@ -366,7 +353,6 @@ body{
 
 <div class="main-container">
   <div class="col-left" id="colLeft">
-
     <div class="platform-group" data-pair="1">
       <div class="platform-even" data-station="2">
         <div class="platform-num">2</div>
@@ -387,7 +373,6 @@ body{
         <div class="platform-num">1</div>
       </div>
     </div>
-
     <div class="platform-group" data-pair="2">
       <div class="platform-even" data-station="4">
         <div class="platform-num">4</div>
@@ -408,7 +393,6 @@ body{
         <div class="platform-num">3</div>
       </div>
     </div>
-
     <div class="platform-group" data-pair="3">
       <div class="platform-even" data-station="6">
         <div class="platform-num">6</div>
@@ -429,11 +413,8 @@ body{
         <div class="platform-num">5</div>
       </div>
     </div>
-
   </div>
-
   <div class="col-right" id="colRight">
-
     <div class="platform-group" data-pair="4">
       <div class="platform-even" data-station="8">
         <div class="platform-num">8</div>
@@ -454,7 +435,6 @@ body{
         <div class="platform-num">7</div>
       </div>
     </div>
-
     <div class="platform-group" data-pair="5">
       <div class="platform-even" data-station="10">
         <div class="platform-num">10</div>
@@ -475,7 +455,6 @@ body{
         <div class="platform-num">9</div>
       </div>
     </div>
-
     <div class="platform-group" data-pair="6">
       <div class="platform-even" data-station="12">
         <div class="platform-num">12</div>
@@ -496,7 +475,6 @@ body{
         <div class="platform-num">11</div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -504,68 +482,64 @@ body{
   <div class="edit-title">车次/站台编辑面板</div>
   <div class="block-line">
     <div class="rule-desc">
-      规则：出发车开车前15分钟上屏、发车立刻下屏；到达车到站前5分钟上屏、到站后1分钟下屏；单站台仅显示最近一趟有效车次
+      规则：出发车开车前15分钟上屏、发车立刻下屏；到达车到站前5分钟上屏、到站后1分钟下屏；单站台仅显示最近一趟有效车次；空白站台每30秒自动切换宣传标语
     </div>
   </div>
-
   <div class="item">
     <label>顶部中文站名</label>
     <input class="input-item" id="editCnStation" value="漯河西站">
   </div>
-
   <div class="item">
     <label>顶部英文站名</label>
     <input class="input-item" id="editEnStation" value="Luohexi Railway Station">
   </div>
-
   <div class="item">
     <label>目标站台号 1-12</label>
     <input class="input-item" id="editPlat" placeholder="数字">
   </div>
-
   <div class="item">
     <label>车次编号</label>
     <input class="input-item" id="editTrainNo" placeholder="G/D/C">
   </div>
-
   <div class="item">
     <label>始发站</label>
     <input class="input-item" id="editFrom" placeholder="如：漯河西">
   </div>
-
   <div class="item">
     <label>终到站</label>
     <input class="input-item" id="editTo" placeholder="如：漯河西">
   </div>
-
   <div class="item">
     <label>时间 HH:mm开 / HH:mm到</label>
     <input class="input-item" id="editDep" placeholder="16:07开 / 18:20到">
   </div>
-
   <div class="item">
     <label>编组</label>
     <input class="input-item" id="editCoach" placeholder="8车 / 16车 / 17车 / 18车">
   </div>
-
   <div class="btn-row">
     <button class="btn btn-add" id="btnAddTrain">添加车次</button>
     <button class="btn btn-save" id="btnClearPlat">清空站台</button>
   </div>
-
   <div class="debug-box" id="debugBox">调试信息</div>
 </div>
 
 <script>
-// 时间阈值配置 已修改：发车前15分钟上屏
-const DEP_SHOW_BEFORE = 15;    // 出发：开车前15分钟上屏
-const ARR_SHOW_BEFORE = 5;    // 到达：到站前5分钟上屏
-const ARR_HOLD_AFTER = 1;     // 到达：到站后保留1分钟下屏
+const DEP_SHOW_BEFORE = 15;
+const ARR_SHOW_BEFORE = 5;
+const ARR_HOLD_AFTER = 1;
 
 let stationCn = "漯河西站";
 let stationEn = "Luohexi Railway Station";
 
-// 完整全天车次数据
+// 三条轮播标语，标语1原版不变，2、3逗号分行
+const sloganList = [
+  `<div class="empty-text">不忘初心，牢记使命。<br>交通强国，铁路先行。</div>`,
+  `<div class="empty-text">食品名城风采满面，<br>幸福之城有里有面</div>`,
+  `<div class="empty-text">撸起袖子加油干，<br>我们都是追梦人</div>`
+];
+let sloganIndex = 0;
+
 let platformTrains = {
   "1": [
     {no:"G249",from:"漯河西",to:"深圳北",time:"07:32开",coach:"16车"},
@@ -747,127 +721,80 @@ const $$ = s => document.querySelectorAll(s);
 function pad2(n){
   return n < 10 ? "0" + n : n;
 }
-
-function getDayTs(h, m){
+function getDayTs(h,m){
   const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m).getTime();
+  return new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m).getTime();
 }
-
 function parseTimeValue(str){
   const match = str.match(/(\d{1,2}):(\d{2})(开|到)/);
   if(!match) return null;
-  return {
-    h: parseInt(match[1], 10),
-    m: parseInt(match[2], 10),
-    type: match[3]
-  };
+  return {h:+match[1],m:+match[2],type:match[3]};
 }
-
-function getMinDiff(targetH, targetM){
+function getMinDiff(targetH,targetM){
   const now = new Date();
-  const target = getDayTs(targetH, targetM);
-  const diffMs = target - now.getTime();
-  return Math.floor(diffMs / 60000);
+  const target = getDayTs(targetH,targetM);
+  return Math.floor((target - now.getTime()) / 60000);
 }
-
 function updateStationName(){
   $("#cnStation").innerText = stationCn;
   $("#enStation").innerText = stationEn;
 }
-
 function updateDebug(){
   const box = $("#debugBox");
   if(!box) return;
   const now = new Date();
-  const lines = [];
-  lines.push("当前时间：" + now.toLocaleTimeString("zh-CN"));
-  lines.push(`出发车：开车前${DEP_SHOW_BEFORE}分钟上屏，发车立刻下屏`);
-  lines.push(`到达车：到站前${ARR_SHOW_BEFORE}分钟上屏，到站后${ARR_HOLD_AFTER}分钟下屏`);
-  for(const plat of Object.keys(platformTrains)){
-    const trains = platformTrains[plat];
-    lines.push("站台" + plat + "：共" + trains.length + "趟");
-  }
+  const lines = [`当前时间：${now.toLocaleTimeString("zh-CN")}`,`出发车：开车前${DEP_SHOW_BEFORE}分钟上屏，发车立刻下屏`,`到达车：到站前${ARR_SHOW_BEFORE}分钟上屏，到站后${ARR_HOLD_AFTER}分钟下屏`];
+  for(const p of Object.keys(platformTrains)) lines.push(`站台${p}：共${platformTrains[p].length}趟`);
   box.innerText = lines.join("\n");
 }
-
-function renderSingleTrain(box, train, isEven){
-  const timeInfo = parseTimeValue(train.time);
-  const displayTime = train.time;
-  let guideText = "当前位置7车，";
-  if(train.coach === "8车"){
-    guideText += "1-4车向前，5-8车向后。";
-  }else if(train.coach === "16车"){
-    guideText += "1-8车向前，9-16车向后。";
-  }else if(train.coach === "17车"){
-    guideText += "1-8车向前，9-17车向后。";
-  }else if(train.coach === "18车"){
-    guideText += "1-9车向前，10-18车向后。";
-  }else{
-    guideText += "按车厢号指引前往。";
-  }
+function renderSingleTrain(box,train,isEven){
+  const t = parseTimeValue(train.time);
+  const disp = train.time;
+  let guide = "当前位置7车，";
+  if(train.coach === "8车") guide += "1-4车向前，5-8车向后。";
+  else if(train.coach === "16车") guide += "1-8车向前，9-16车向后。";
+  else if(train.coach === "17车") guide += "1-8车向前，9-17车向后。";
+  else if(train.coach === "18车") guide += "1-9车向前，10-18车向后。";
+  else guide += "按车厢号指引前往。";
   if(isEven){
-    box.innerHTML = `
-      <div class="train-no-time">
-        <span>${train.no}次</span>
-        <span>${displayTime}</span>
-      </div>
-      <div class="train-route">${train.from} → ${train.to}</div>
-      <div class="train-coach-guide">${guideText}</div>
-    `;
+    box.innerHTML = `<div class="train-no-time"><span>${train.no}次</span><span>${disp}</span></div><div class="train-route">${train.from} → ${train.to}</div><div class="train-coach-guide">${guide}</div>`;
   }else{
-    box.innerHTML = `
-      <div class="train-no-time">
-        <span>${displayTime}</span>
-        <span>${train.no}次</span>
-      </div>
-      <div class="train-route">${train.from} → ${train.to}</div>
-      <div class="train-coach-guide">${guideText}</div>
-    `;
+    box.innerHTML = `<div class="train-no-time"><span>${disp}</span><span>${train.no}次</span></div><div class="train-route">${train.from} → ${train.to}</div><div class="train-coach-guide">${guide}</div>`;
   }
 }
-
-function renderPlatform(platEl, platNum){
-  const contentBox = platEl.querySelector(".platform-content");
+function renderPlatform(platEl,platNum){
+  const box = platEl.querySelector(".platform-content");
   const trains = platformTrains[platNum] || [];
-  const now = new Date();
-  let validList = [];
+  let valid = [];
   for(const t of trains){
-    const timeInfo = parseTimeValue(t.time);
-    if(!timeInfo) continue;
-    const diffMin = getMinDiff(timeInfo.h, timeInfo.m);
+    const ti = parseTimeValue(t.time);
+    if(!ti) continue;
+    const diff = getMinDiff(ti.h,ti.m);
     let ok = false;
-    if(timeInfo.type === "开"){
-      // 出发：大于0（未发车）、且距离开车≤15分钟
-      if(diffMin > 0 && diffMin <= DEP_SHOW_BEFORE){
-        ok = true;
-      }
+    if(ti.type === "开"){
+      if(diff > 0 && diff <= DEP_SHOW_BEFORE) ok = true;
     }else{
-      // 到达：到站前5分钟 ~ 到站后1分钟
-      if(diffMin >= -ARR_HOLD_AFTER && diffMin <= ARR_SHOW_BEFORE){
-        ok = true;
-      }
+      if(diff >= -ARR_HOLD_AFTER && diff <= ARR_SHOW_BEFORE) ok = true;
     }
-    if(ok){
-      validList.push({...t, ts:getDayTs(timeInfo.h, timeInfo.m)});
-    }
+    if(ok) valid.push({...t,ts:getDayTs(ti.h,ti.m)});
   }
-  // 按时间由近到远排序，只取第一趟
-  validList.sort((a,b)=>a.ts - b.ts);
-  if(validList.length === 0){
-    contentBox.innerHTML = `<div class="empty-text">不忘初心，牢记使命。<br>交通强国，铁路先行。</div>`;
+  valid.sort((a,b)=>a.ts - b.ts);
+  if(valid.length === 0){
+    box.innerHTML = sloganList[sloganIndex];
     return;
   }
-  renderSingleTrain(contentBox, validList[0], platEl.classList.contains("platform-even"));
+  renderSingleTrain(box,valid[0],platEl.classList.contains("platform-even"));
 }
-
 function refreshAllPlatform(){
-  $$(".platform-even, .platform-odd").forEach(el=>{
-    const p = el.dataset.station;
-    renderPlatform(el, p);
-  });
+  $$(".platform-even,.platform-odd").forEach(el=>renderPlatform(el,el.dataset.station));
   updateDebug();
 }
-
+function updateAllEmptySlogan(){
+  const html = sloganList[sloganIndex];
+  $$(".platform-content").forEach(box=>{
+    if(!box.querySelector(".train-no-time")) box.innerHTML = html;
+  })
+}
 function updateAllClocks(){
   const now = new Date();
   const h = now.getHours() % 12;
@@ -877,7 +804,6 @@ function updateAllClocks(){
   $$(".h-hand").forEach(el=>el.style.transform = `translateX(-50%) rotate(${hDeg}deg)`);
   $$(".m-hand").forEach(el=>el.style.transform = `translateX(-50%) rotate(${mDeg}deg)`);
 }
-
 function toggleEditPanel(){
   const panel = $("#editPanel");
   const btn = $("#toggleEdit");
@@ -892,7 +818,6 @@ function toggleEditPanel(){
     updateDebug();
   }
 }
-
 function addTrain(){
   const plat = $("#editPlat").value.trim();
   const no = $("#editTrainNo").value.trim();
@@ -900,58 +825,47 @@ function addTrain(){
   const to = $("#editTo").value.trim();
   const dep = $("#editDep").value.trim();
   const coach = $("#editCoach").value.trim();
-  if(!plat||!no||!from||!to||!dep||!coach){
-    alert("请完整填写所有项");
-    return;
-  }
-  if(!/^\d+$/.test(plat)||plat<1||plat>12){
-    alert("站台范围1-12");
-    return;
-  }
-  if(!/^\d{1,2}:\d{2}(开|到)$/.test(dep)){
-    alert("时间格式：HH:mm开 / HH:mm到");
-    return;
-  }
-  if(!["8车","16车","17车","18车"].includes(coach)){
-    alert("编组仅支持 8车 / 16车 / 17车 / 18车");
-    return;
-  }
+  if(!plat||!no||!from||!to||!dep||!coach){alert("请完整填写所有输入项");return;}
+  if(!/^\d+$/.test(plat)||+plat<1||+plat>12){alert("站台只能填写1-12数字");return;}
+  if(!/^\d{1,2}:\d{2}(开|到)$/.test(dep)){alert("时间格式必须为 HH:mm开 / HH:mm到");return;}
+  if(!["8车","16车","17车","18车"].includes(coach)){alert("编组仅支持：8车 / 16车 / 17车 / 18车");return;}
   if(!platformTrains[plat]) platformTrains[plat] = [];
   platformTrains[plat].push({no,from,to,time:dep,coach});
-  $("#editTrainNo,#editFrom,#editTo,#editDep,#editPlat,#editCoach").value = "";
+  $("#editPlat,#editTrainNo,#editFrom,#editTo,#editDep,#editCoach").value = "";
   refreshAllPlatform();
-  alert("添加车次成功");
+  alert("车次添加成功");
 }
-
 function clearPlatform(){
   const plat = $("#editPlat").value.trim();
   if(!plat) return;
   platformTrains[plat] = [];
   refreshAllPlatform();
-  alert("已清空站台"+plat);
+  alert(`已清空站台${plat}所有车次`);
 }
-
 function saveStationName(){
   stationCn = $("#editCnStation").value.trim();
   stationEn = $("#editEnStation").value.trim();
   updateStationName();
 }
-
 function bindEvents(){
-  $("#toggleEdit").addEventListener("click", toggleEditPanel);
-  $("#btnAddTrain").addEventListener("click", addTrain);
-  $("#btnClearPlat").addEventListener("click", clearPlatform);
-  $("#editCnStation").addEventListener("change", saveStationName);
-  $("#editEnStation").addEventListener("change", saveStationName);
+  $("#toggleEdit").addEventListener("click",toggleEditPanel);
+  $("#btnAddTrain").addEventListener("click",addTrain);
+  $("#btnClearPlat").addEventListener("click",clearPlatform);
+  $("#editCnStation").addEventListener("change",saveStationName);
+  $("#editEnStation").addEventListener("change",saveStationName);
 }
-
 function init(){
   updateStationName();
   bindEvents();
   updateAllClocks();
   refreshAllPlatform();
-  setInterval(updateAllClocks, 1000);
-  setInterval(refreshAllPlatform, 1000);
+  updateAllEmptySlogan();
+  setInterval(updateAllClocks,1000);
+  setInterval(refreshAllPlatform,1000);
+  setInterval(()=>{
+    sloganIndex = (sloganIndex + 1) % sloganList.length;
+    updateAllEmptySlogan();
+  },30000);
 }
 window.onload = init;
 </script>
