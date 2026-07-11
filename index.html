@@ -750,12 +750,18 @@ function updateDebug(){
 function renderSingleTrain(box,train,isEven){
   const t = parseTimeValue(train.time);
   const disp = train.time;
-  let guide = "当前位置7车，";
-  if(train.coach === "8车") guide += "1-4车向前，5-8车向后。";
-  else if(train.coach === "16车") guide += "1-8车向前，9-16车向后。";
-  else if(train.coach === "17车") guide += "1-8车向前，9-17车向后。";
-  else if(train.coach === "18车") guide += "1-9车向前，10-18车向后。";
-  else guide += "按车厢号指引前往。";
+  let guide = "";
+if(train.coach === "8车"){
+  guide = "当前位置6车，1-5车向前，7-8车向后。";
+}else if(train.coach === "16车"){
+  guide = "当前位置7车，1-8车向前，9-16车向后。";
+}else if(train.coach === "17车"){
+  guide = "当前位置7车，1-8车向前，9-17车向后。";
+}else if(train.coach === "18车"){
+  guide = "当前位置7车，1-8车向前，9-18车向后。";
+}else{
+  guide = "按车厢号指引前往。";
+}
   if(isEven){
     box.innerHTML = `<div class="train-no-time"><span>${train.no}次</span><span>${disp}</span></div><div class="train-route">${train.from} → ${train.to}</div><div class="train-coach-guide">${guide}</div>`;
   }else{
