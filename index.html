@@ -541,11 +541,13 @@ const sloganList = [
 let sloganIndex = 0;
 
 let platformTrains = {
+  const platformTrains = {
   "1": [
     {no:"G249",from:"漯河西",to:"深圳北",time:"07:32开",coach:"16车"},
     {no:"G423",from:"郑州东",to:"广州南",time:"08:44开",coach:"16车"},
     {no:"G1185",from:"洛阳龙门",to:"深圳北",time:"09:06开",coach:"8车"},
     {no:"G1535",from:"濮阳东",to:"昆明南",time:"09:15开",coach:"16车"},
+    {no:"G2295",from:"西安北",to:"厦门北",time:"10:16开",coach:"16车"},
     {no:"G504",from:"长沙南",to:"北京西",time:"10:49开",coach:"16车"},
     {no:"G511",from:"北京西",to:"宜昌东",time:"11:07开",coach:"8车"},
     {no:"G1537",from:"北京西",to:"昆明南",time:"11:12开",coach:"17车"},
@@ -562,15 +564,26 @@ let platformTrains = {
     {no:"G951",from:"青岛",to:"长沙南",time:"16:27开",coach:"8车"},
     {no:"G1051",from:"北京西",to:"广州南",time:"16:30开",coach:"16车"},
     {no:"G845",from:"兰州西",to:"广州南",time:"17:10开",coach:"16车"},
+    {no:"G2625",from:"大连北",to:"武汉",time:"17:41开",coach:"17车"},
+    {no:"G3483",from:"沈阳北",to:"汉口",time:"17:58开",coach:"17车"},
     {no:"G1515",from:"北京西",to:"宜昌北",time:"18:23开",coach:"8车"},
+    {no:"G1215",from:"沈阳",to:"长沙南",time:"18:38开",coach:"16车"},
     {no:"G503",from:"北京西",to:"株洲西",time:"18:44开",coach:"8车"},
+    {no:"G4355",from:"北京南",to:"深圳北",time:"19:37开",coach:"17车"},
+    {no:"G525",from:"北京西",to:"武汉",time:"20:25开",coach:"8车"},
+    {no:"G507",from:"北京西",to:"长沙南",time:"20:39开",coach:"16车"},
+    {no:"G527",from:"北京西",to:"武汉",time:"21:20开",coach:"16车"},
+    {no:"G3009",from:"青岛",to:"武汉",time:"21:53开",coach:"16车"},
     {no:"G248",from:"深圳北",to:"漯河西",time:"22:03到",coach:"16车"}
   ],
   "2": [
     {no:"G478",from:"北京西",to:"汉口",time:"07:57开",coach:"8车"},
-    {no:"G1401",from:"石家庄",to:"南宁东",time:"10:33开",coach:"16车"},
     {no:"G2045",from:"郑州东",to:"厦门",time:"08:47开",coach:"8车"},
+    {no:"G1401",from:"石家庄",to:"南宁东",time:"10:33开",coach:"16车"},
+    {no:"G867",from:"西安北",to:"苍南",time:"10:03开",coach:"8车"},
+    {no:"G2085",from:"郑州东",to:"汉口",time:"10:54开",coach:"8车"},
     {no:"G1461",from:"济南西",to:"南宁东",time:"11:18开",coach:"16车"},
+    {no:"G3643",from:"济南东",to:"贵阳北",time:"11:38开",coach:"16车"},
     {no:"G945",from:"济南西",to:"深圳北",time:"12:05开",coach:"16车"},
     {no:"G2065",from:"济南西",to:"南宁东",time:"13:06开",coach:"16车"},
     {no:"G941",from:"青岛",to:"广州南",time:"13:32开",coach:"16车"},
@@ -584,6 +597,9 @@ let platformTrains = {
     {no:"G521",from:"北京西",to:"武汉",time:"17:15开",coach:"8车"},
     {no:"G1847",from:"烟台",to:"邵阳",time:"17:20开",coach:"8车"},
     {no:"G2032",from:"宜昌东",to:"新乡东",time:"17:35开",coach:"8车"},
+    {no:"G855",from:"北京西",to:"株洲西",time:"18:50开",coach:"8车"},
+    {no:"G1289",from:"长春西",to:"长沙南",time:"18:57开",coach:"16车"},
+    {no:"G5345",from:"漯河西",to:"长沙南",time:"19:50开",coach:"16车"},
     {no:"G1277",from:"哈尔滨西",to:"武汉",time:"20:21开",coach:"16车"},
     {no:"G2103",from:"威海",to:"信阳东",time:"20:47开",coach:"8车"},
     {no:"G1190",from:"深圳北",to:"郑州东",time:"22:15开",coach:"16车"}
@@ -606,6 +622,8 @@ let platformTrains = {
     {no:"G914",from:"香港西九龙",to:"西安北",time:"16:49开",coach:"16车"},
     {no:"G851",from:"西宁",to:"武汉",time:"17:24开",coach:"16车"},
     {no:"G1044",from:"珠海",to:"北京西",time:"17:25开",coach:"17车"},
+    {no:"G108",from:"长沙南",to:"北京西",time:"18:10开",coach:"16车"},
+    {no:"G616",from:"汕头",to:"北京西",time:"18:37开",coach:"8车"},
     {no:"G648",from:"厦门",to:"郑州东",time:"19:09开",coach:"16车"},
     {no:"G398",from:"南宁东",to:"北京西",time:"19:22开",coach:"16车"},
     {no:"G830",from:"深圳北",to:"西安北",time:"19:27开",coach:"16车"},
@@ -615,7 +633,9 @@ let platformTrains = {
     {no:"G1536",from:"昆明南",to:"濮阳东",time:"21:13开",coach:"16车"},
     {no:"G527",from:"北京西",to:"武汉",time:"21:20开",coach:"16车"},
     {no:"G8988",from:"岳阳北",to:"石家庄",time:"21:23开",coach:"8车"},
-    {no:"G3826",from:"湖州东",to:"漯河西",time:"21:46到",coach:"16车"}
+    {no:"G8326",from:"湖州东",to:"漯河西",time:"21:46到",coach:"16车"},
+    {no:"G5323",from:"洛阳龙门",to:"阜阳西",time:"22:07开",coach:"8车"},
+    {no:"G546",from:"广州南",to:"郑州东",time:"22:36开",coach:"8车"}
   ],
   "4": [
     {no:"G3484",from:"汉口",to:"沈阳北",time:"08:09开",coach:"16车"},
@@ -624,14 +644,16 @@ let platformTrains = {
     {no:"G502",from:"长沙南",to:"北京西",time:"10:08开",coach:"16车"},
     {no:"G1290",from:"长沙南",to:"长春西",time:"10:39开",coach:"8车"},
     {no:"G640",from:"南昌西",to:"兰州西",time:"11:45开",coach:"16车"},
-    {no:"G692",from:"武汉",to:"太原南",time:"13:25开",coach:"16车"},
     {no:"G856",from:"武汉",to:"西安北",time:"11:10开",coach:"8车"},
+    {no:"G692",from:"武汉",to:"太原南",time:"13:25开",coach:"16车"},
     {no:"G1186",from:"深圳北",to:"焦作西",time:"15:15开",coach:"16车"},
     {no:"G2296",from:"厦门北",to:"西安北",time:"18:53开",coach:"8车"},
     {no:"G1289",from:"长春西",to:"长沙南",time:"18:57开",coach:"16车"},
     {no:"G508",from:"长沙南",to:"北京西",time:"19:39开",coach:"8车"},
+    {no:"G1164",from:"广州南",to:"濮阳东",time:"20:15开",coach:"16车"},
     {no:"G2282",from:"福田",to:"郑州东",time:"21:30开",coach:"16车"},
-    {no:"G3009",from:"青岛",to:"武汉",time:"21:53开",coach:"16车"}
+    {no:"G3009",from:"青岛",to:"武汉",time:"21:53开",coach:"16车"},
+    {no:"G2236",from:"汉口",to:"郑州东",time:"22:18开",coach:"8车"}
   ],
   "5": [
     {no:"G769",from:"漯河西",to:"成都东",time:"08:32开",coach:"16车"},
@@ -641,15 +663,23 @@ let platformTrains = {
     {no:"G8902",from:"温州",to:"呼和浩特东",time:"14:15开",coach:"17车"},
     {no:"G1168",from:"上海虹桥",to:"银川",time:"15:20开",coach:"8车"},
     {no:"G5774",from:"上海南",to:"宝鸡",time:"15:42开",coach:"8车"},
+    {no:"G4074",from:"南京南",to:"乌兰察布",time:"17:47开",coach:"16车"},
+    {no:"G496",from:"上海南",to:"平顶山西",time:"18:10开",coach:"16车"},
+    {no:"G765",from:"漯河西",to:"延安",time:"18:49开",coach:"16车"},
     {no:"G1277",from:"哈尔滨西",to:"武汉",time:"20:21开",coach:"16车"},
     {no:"G5602",from:"上海虹桥",to:"焦作西",time:"20:15开",coach:"16车"},
     {no:"G653",from:"杭州东",to:"洛阳龙门",time:"21:13开",coach:"16车"},
-    {no:"G576",from:"杭州东",to:"漯河西",time:"18:20到",coach:"16车"}
+    {no:"G576",from:"杭州东",to:"漯河西",time:"18:20到",coach:"16车"},
+    {no:"G7462",from:"嘉兴南",to:"宝鸡南",time:"19:37开",coach:"8车"}
   ],
   "6": [
     {no:"G3755",from:"合肥南",to:"洛阳龙门",time:"11:22开",coach:"16车"},
     {no:"G629",from:"周口东",to:"自贡南",time:"13:05开",coach:"16车"},
     {no:"G438",from:"商丘",to:"成都东",time:"14:37开",coach:"8车"},
+    {no:"G846",from:"杭州东",to:"西安北",time:"16:05开",coach:"16车"},
+    {no:"G953",from:"商丘",to:"成都东",time:"16:25开",coach:"16车"},
+    {no:"G573",from:"菏泽东",to:"宜宾北",time:"17:22开",coach:"16车"},
+    {no:"G376",from:"苏州北",to:"洛阳龙门",time:"17:55开",coach:"16车"},
     {no:"G766",from:"周口东",to:"大同南",time:"18:17开",coach:"8车"},
     {no:"G337",from:"上海虹桥",to:"呼和浩特东",time:"18:25开",coach:"16车"},
     {no:"G3752",from:"金华",to:"洛阳龙门",time:"21:55开",coach:"8车"},
@@ -665,7 +695,8 @@ let platformTrains = {
     {no:"G520",from:"成都东",to:"德州东",time:"17:27开",coach:"16车"},
     {no:"G377",from:"洛阳龙门",to:"苏州东",time:"18:05开",coach:"8车"},
     {no:"G2789",from:"漯河西",to:"合肥南",time:"20:00开",coach:"8车"},
-    {no:"G3389",from:"洛阳龙门",to:"漯河西",time:"20:25到",coach:"8车"}
+    {no:"G3389",from:"洛阳龙门",to:"漯河西",time:"20:25到",coach:"8车"},
+    {no:"G455",from:"长治东",to:"周口东",time:"22:27开",coach:"8车"}
   ],
   "8": [
     {no:"G3821",from:"漯河西",to:"上海虹桥",time:"08:17开",coach:"16车"},
