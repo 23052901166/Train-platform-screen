@@ -540,8 +540,8 @@ const sloganList = [
 ];
 let sloganIndex = 0;
 
+// 【修复】删除内部重复的const platformTrains = {，只保留一层对象
 let platformTrains = {
-  const platformTrains = {
   "1": [
     {no:"G249",from:"漯河西",to:"深圳北",time:"07:32开",coach:"16车"},
     {no:"G423",from:"郑州东",to:"广州南",time:"08:44开",coach:"16车"},
@@ -782,17 +782,18 @@ function renderSingleTrain(box,train,isEven){
   const t = parseTimeValue(train.time);
   const disp = train.time;
   let guide = "";
-if(train.coach === "8车"){
-  guide = "当前位置6车，1-5车向前，7-8车向后。";
-}else if(train.coach === "16车"){
-  guide = "当前位置7车，1-6车向前，8-16车向后。";
-}else if(train.coach === "17车"){
-  guide = "当前位置7车，1-6车向前，8-17车向后。";
-}else if(train.coach === "18车"){
-  guide = "当前位置7车，1-6车向前，8-18车向后。";
-}else{
-  guide = "按车厢号指引前往。";
-}
+  // 【修复】按约定正确车厢分流文案
+  if(train.coach === "8车"){
+    guide = "当前位置6车，1-5车向前，7-8车向后。";
+  }else if(train.coach === "16车"){
+    guide = "当前位置7车，1-6车向前，8-16车向后。";
+  }else if(train.coach === "17车"){
+    guide = "当前位置7车，1-6车向前，8-17车向后。";
+  }else if(train.coach === "18车"){
+    guide = "当前位置7车，1-6车向前，8-18车向后。";
+  }else{
+    guide = "按车厢号指引前往。";
+  }
   if(isEven){
     box.innerHTML = `<div class="train-no-time"><span>${train.no}次</span><span>${disp}</span></div><div class="train-route">${train.from} → ${train.to}</div><div class="train-coach-guide">${guide}</div>`;
   }else{
